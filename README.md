@@ -1,3 +1,47 @@
+#Docker
+
+## Build docker container
+```
+docker build -t docker-react-confd:dev .
+```
+
+## Start docker container
+
+```
+docker run -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e "NAME=myApp" --rm docker-react-confd:dev
+```
+Lets dissect this command...
+
+```
+docker run -v ${PWD}:/app
+```
+
+Binds app directory mount a volume.
+
+```
+-v /app/node_modules
+```
+
+Binds /app/node_modules directory mount a volume.
+
+```-p 3001:3000```
+
+Bind hostPort:containerPort
+
+```-e ENVARNAME=envVarValue```
+
+Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env`
+
+```--rm docker-react-confd:dev```
+
+removes the container when it's exited
+
+# Confd
+
+More dockerization info [here](https://mherman.org/blog/dockerizing-a-react-app/)
+
+# ReactApp
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

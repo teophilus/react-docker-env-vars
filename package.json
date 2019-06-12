@@ -1,5 +1,5 @@
 {
-  "name": "react-environment-variables",
+  "name": "react-docker-confd",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
