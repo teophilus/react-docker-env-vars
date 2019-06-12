@@ -24,15 +24,21 @@ Binds app directory mount a volume.
 
 Binds /app/node_modules directory mount a volume.
 
-```-p 3001:3000```
+```
+-p 3001:3000
+```
 
 Bind hostPort:containerPort
 
-```-e ENVARNAME=envVarValue```
+```
+-e ENVARNAME=envVarValue
+```
 
 Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env`
 
-```--rm docker-react-confd:dev```
+```
+--rm docker-react-confd:dev
+```
 
 removes the container when it's exited
 
