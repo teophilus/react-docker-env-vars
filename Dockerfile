@@ -20,11 +20,19 @@ RUN apk add --no-cache \
 # base image
 FROM node:12.2.0-alpine
 
+# Install Supervisor
+RUN apk update \
+  && apk add supervisor \
+  && mkdir -p /var/log/supervisor
+
 # copy conf from stage 1 into stage 2
 COPY --from=confd /go/bin/confd /usr/local/bin/confd
 
 # set working directory
 WORKDIR /app
+
+COPY ./supervisord/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
+COPY ./supervisord/supervisord.conf /etc/supervisor/supervisord.conf
 
 # run confd (will show an error but we will take care of this on start app)
 COPY ./confd /etc/confd
@@ -39,4 +47,7 @@ RUN npm install --silent
 RUN npm install react-scripts@3.0.1 -g --silent
 
 # run confd and start app
-CMD confd -onetime -backend env && npm start
+# CMD confd -onetime -backend env && npm start
+
+CMD supervisord -c /etc/supervisor/supervisord.conf && confd --interval 5 -backend vault -node http://172.18.0.2:8200 \
+    -auth-type token -auth-token myroot

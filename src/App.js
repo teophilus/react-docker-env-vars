@@ -8,7 +8,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          REACT_APP_NAME: {process.env.REACT_APP_NAME}
+          REACT_APP_NAME: {process.env.REACT_APP_NAME}<br/>
+          REACT_APP_NUMBER: {process.env.REACT_APP_NUMBER}<br/>
+          REACT_APP_NOTSECRET: {process.env.REACT_APP_NOTSECRET}
         </p>
         <a
           className="App-link"
