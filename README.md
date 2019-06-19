@@ -8,7 +8,7 @@ docker build -t docker-react-confd:dev .
 ## Start docker container
 
 ```
-docker run -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e "NAME=myApp" --rm docker-react-confd:dev
+docker run -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e "REACT_APP_NAME=myApp" --rm docker-react-confd:dev
 ```
 Lets dissect this command...
 
@@ -31,7 +31,7 @@ Binds /app/node_modules directory mount a volume.
 Bind hostPort:containerPort
 
 ```
--e ENVARNAME=envVarValue
+-e REACT_APP_ENVARNAME=envVarValue
 ```
 
 Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env`
