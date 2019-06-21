@@ -26,52 +26,23 @@ token: myroot
 docker build -t docker-react-confd:dev .
 ```
 **2) Start docker container**
-
 ```
 docker run -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e "REACT_APP_NAME=myApp" --rm docker-react-confd:dev
 ```
+
 <br />
+
 **Lets dissect this command...**
-```
-docker run
-```
-> creates a container
 
-<br />
-```
--v ${PWD}:/app
-```
-> Binds app directory mount a volume.
-
-<br />
-```
--v /app/node_modules
-```
-> Binds /app/node_modules directory as an anonymous mount volume.
-
-<br />
-```
--p 3001:3000
-```
-> Maps ports hostPort:containerPort
-
-<br />
-```
--e REACT_APP_ENVARNAME=envVarValue
-```
-> Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env`
-
-<br />
-```
---rm
-```
-> removes the container when it's exited
-
-<br />
-```
-docker-react-confd:dev
-```
-> image:tag to use for the container being created
+| arguments  | description |
+|------------|-------------|
+| `docker run` | creates a container |
+| `-v ${PWD}:/app` | Binds app directory mount a volume |
+| `-v /app/node_modules` | Binds /app/node_modules directory as an anonymous mount volume |
+| `-p 3001:3000` | Maps ports hostPort:containerPort |
+| `-e REACT_APP_ENVARNAME=envVarValue` | Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env` |
+| `--rm` | removes the container when it's exited |
+| `docker-react-confd:dev` | image:tag to use for the container being created |
 
 ## Available Scripts
 
