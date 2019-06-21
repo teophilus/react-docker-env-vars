@@ -46,8 +46,10 @@ COPY package.json /app/package.json
 RUN npm install --silent
 RUN npm install react-scripts@3.0.1 -g --silent
 
+# Ship Logs to stdout
+RUN ln -s /proc/1/fd/1 /var/log/supervisor/api.log
+
 # run confd and start app
 # CMD confd -onetime -backend env && npm start
 
-CMD supervisord -c /etc/supervisor/supervisord.conf && confd --interval 5 -backend vault -node http://172.18.0.2:8200 \
-    -auth-type token -auth-token myroot
+CMD supervisord -c /etc/supervisor/supervisord.conf && confd --interval 5 -backend vault -path kv -node http://react-app-vault:8200 -auth-type token -auth-token myroot > /proc/1/fd/1

@@ -1,54 +1,48 @@
-# Docker
+# React App Configs
+Configuration Management option for React App configs with Environment Variable override.
 
-## Build docker container
+## Development Stack
+
+- **Confd** ([kelseyhightower/confd](https://github.com/kelseyhightower/confd))
+- **React App:** ([facebook/create-react-app](https://github.com/facebook/create-react-app))
+- **Supervisor** ([Supervisor/supervisor](https://github.com/Supervisor/supervisor))
+- **Docker** ([Docker](https://github.com/docker))
+
+## Demo
+```
+docker-compose up --build
+
+App:
+http://localhost:3001
+
+Vault:
+http://localhost:8200/ui
+token: myroot
+```
+
+## Without docker-compose
+**1) Build docker image**
 ```
 docker build -t docker-react-confd:dev .
 ```
-
-## Start docker container
-
+**2) Start docker container**
 ```
 docker run -v ${PWD}:/app -v /app/node_modules -p 3001:3000 -e "REACT_APP_NAME=myApp" --rm docker-react-confd:dev
 ```
-Lets dissect this command...
 
-```
-docker run -v ${PWD}:/app
-```
+<br />
 
-Binds app directory mount a volume.
+**Lets dissect this command...**
 
-```
--v /app/node_modules
-```
-
-Binds /app/node_modules directory mount a volume.
-
-```
--p 3001:3000
-```
-
-Bind hostPort:containerPort
-
-```
--e REACT_APP_ENVARNAME=envVarValue
-```
-
-Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env`
-
-```
---rm docker-react-confd:dev
-```
-
-removes the container when it's exited
-
-# Confd
-
-More dockerization info [here](https://mherman.org/blog/dockerizing-a-react-app/)
-
-# ReactApp
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+| arguments  | description |
+|------------|-------------|
+| `docker run` | creates a container |
+| `-v ${PWD}:/app` | Binds app directory mount a volume |
+| `-v /app/node_modules` | Binds /app/node_modules directory as an anonymous mount volume |
+| `-p 3001:3000` | Maps ports hostPort:containerPort |
+| `-e REACT_APP_ENVARNAME=envVarValue` | Override environment variables (.env) for debugging or testing, everything should typically be established inside `/confd` and `.env` |
+| `--rm` | removes the container when it's exited |
+| `docker-react-confd:dev` | image:tag to use for the container being created |
 
 ## Available Scripts
 
