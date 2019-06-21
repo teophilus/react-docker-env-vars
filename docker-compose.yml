@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  react-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: "react-app"
+    depends_on:
+      - "vault"
+    ports:
+      - "3001:3000"
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    environment:
+      - "REACT_APP_NOTSECRET=Teon"
+
+  vault:
+    image: vault:latest
+    container_name: "react-app-vault"
+    ports:
+      - "8200:8200"
+    environment:
+      - "VAULT_DEV_ROOT_TOKEN_ID=myroot"
+      - "VAULT_UI=true"
+    cap_add:
+      - IPC_LOCK
+
+  vault-provisioner:
+    image: vault:latest
+    container_name: "react-app-vault-provisioner"
+    depends_on:
+      - "vault"
+    environment:
+      - "VAULT_TOKEN=myroot"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        vault secrets enable -address="http://react-app-vault:8200" -version 1 -path kv kv;
+        vault write -address="http://react-app-vault:8200" kv/secrets name=MasterChief number=5;
